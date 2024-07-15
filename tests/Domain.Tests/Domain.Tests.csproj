@@ -7,6 +7,7 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <RootNamespace>FakePaymentProvider.Domain.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

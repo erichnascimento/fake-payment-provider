@@ -9,3 +9,20 @@ GET {{RestApi_HostAddress}}/todos/1
 Accept: application/json
 
 ###
+
+#< {%
+#    request.variables.set("paymentId", request.headers["Location"])
+#%}
+
+POST {{RestApi_HostAddress}}/v1/payments
+Content-Type: application/json
+
+{
+  "paymentMethod": "boleto",
+  "amount": 100,
+  "currency": "BRL"
+}
+
+###
+
+GET {{RestApi_HostAddress}}/v1/payments/bba32839-777d-4ea7-9e41-04446366d3b8

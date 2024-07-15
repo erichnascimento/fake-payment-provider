@@ -8,4 +8,11 @@
         <PublishAot>true</PublishAot>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Domain.Boundary\Domain.Boundary.csproj" />
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+      <ProjectReference Include="..\Infra\Infra.csproj" />
+      <ProjectReference Include="..\Library\Library.csproj" />
+    </ItemGroup>
+
 </Project>
