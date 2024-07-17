@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
-using WebApiApplication.HttpRestApi.Handles;
+using WebApiApplication.HttpRestApi.Handles.Base;
+using WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 namespace WebApiApplication.HttpRestApi;
-
 
 /// <summary>
 /// This class is used to configure the JSON serialization options for the application.
@@ -12,9 +12,13 @@ namespace WebApiApplication.HttpRestApi;
 /// using the JSON serialization options configured in this class.
 /// </summary>
 
+// Add the [JsonSerializable] attribute to the classes that you want to serialize/deserialize.
+
+// Payment requests and responses
 [JsonSerializable(typeof(CreatePaymentRequest))]
 [JsonSerializable(typeof(CreatePaymentResponse))]
 [JsonSerializable(typeof(GetPaymentResponse))]
 
+// Generic responses
 [JsonSerializable(typeof(CreatedResponse))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext;

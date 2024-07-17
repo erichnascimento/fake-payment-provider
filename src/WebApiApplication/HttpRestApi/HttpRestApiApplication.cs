@@ -2,7 +2,7 @@ using System.Text.Json;
 using FakePaymentProvider.Domain;
 using FakePaymentProvider.Infra.EntityGateway.Memory;
 using FakePaymentProvider.Library.Date;
-using WebApiApplication.HttpRestApi.Handles;
+using WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 namespace WebApiApplication.HttpRestApi;
 
@@ -14,7 +14,7 @@ public class HttpRestApiApplication
     {
         _webApplication.Run();
     }
-    
+
     public static HttpRestApiApplication Create(string[] args)
     {
         return new HttpRestApiApplication(args);
@@ -24,18 +24,18 @@ public class HttpRestApiApplication
     {
         var builder = WebApplication.CreateBuilder(args);
         ConfigureServices(builder);
-        
+
         var webApplication = builder.Build();
         ConfigureRoutes(webApplication);
 
         _webApplication = webApplication;
     }
-    
+
     private static void ConfigureServices(WebApplicationBuilder builder)
     {
         builder.Services.ConfigureHttpJsonOptions(options =>
         {
-            options.SerializerOptions.TypeInfoResolverChain.Insert(0, HttpRestApi.AppJsonSerializerContext.Default);
+            options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
 
             options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             options.SerializerOptions.IncludeFields = true;
@@ -49,7 +49,8 @@ public class HttpRestApiApplication
     {
         var v1RouteGroupBuilder = webApplication.MapGroup("/v1");
         var paymentsRouteGroupBuilder = v1RouteGroupBuilder.MapGroup("/payments");
-        paymentsRouteGroupBuilder.MapPost("/", new CreatePaymentHandler(serviceProvider: webApplication.Services).Handle);
+        paymentsRouteGroupBuilder.MapPost("/",
+            new CreatePaymentHandler(serviceProvider: webApplication.Services).Handle);
 
         paymentsRouteGroupBuilder.MapGet("/{id}", (string id) =>
         {
@@ -73,8 +74,6 @@ public class HttpRestApiApplication
         });
     }
 }
-
-
 
 public sealed record GetPaymentResponse
 {

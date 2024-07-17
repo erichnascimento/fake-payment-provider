@@ -5,6 +5,6 @@ namespace FakePaymentProvider.Domain;
 
 public interface IEntityGateway
 {
-    Payment GetPaymentById(Id id);
+    Payment? GetPaymentById(Id id);
     void SavePayment(Payment payment);
 }
