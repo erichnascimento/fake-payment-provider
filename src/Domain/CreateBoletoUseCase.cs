@@ -5,12 +5,11 @@ using FakePaymentProvider.Library.Date;
 namespace FakePaymentProvider.Domain;
 
 public class CreateBoletoUseCase(
-    CreateBoletoRequest request,
     ITimeService timeService,
     IEntityGateway entityGateway
 ) : ICreateBoletoUseCase
 {
-    public Task<CreateBoletoResponse> Execute()
+    public Task<CreateBoletoResponse> Execute(CreateBoletoRequest request)
     {
         var boleto = Payment.Create(
             method: PaymentMethod.Boleto,

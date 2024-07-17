@@ -1,6 +1,4 @@
-using FakePaymentProvider.Domain;
 using FakePaymentProvider.Domain.Boundary.CreateBoleto;
-using FakePaymentProvider.Library.Date;
 using FakePaymentProvider.Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using WebApiApplication.HttpRestApi.Handles.Base;
@@ -8,7 +6,7 @@ using WebApiApplication.HttpRestApi.Handles.Base;
 namespace WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 public class CreatePaymentHandler(
-    IServiceProvider serviceProvider
+    ICreateBoletoUseCase createBoletoUseCase
 ) : BaseHandler<CreatePaymentRequest, CreatePaymentResponse>
 {
     protected override async Task<CreatePaymentResponse> DoHandle([FromBody] CreatePaymentRequest request)
@@ -32,13 +30,7 @@ public class CreatePaymentHandler(
             DueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(3))
         };
 
-        var useCase = new CreateBoletoUseCase(
-            request: createBoletoRequest,
-            timeService: serviceProvider.GetRequiredService<ITimeService>(),
-            entityGateway: serviceProvider.GetRequiredService<IEntityGateway>()
-        );
-
-        var response = await useCase.Execute();
+        var response = await createBoletoUseCase.Execute(request: createBoletoRequest);
 
         return new CreatePaymentResponse
         {

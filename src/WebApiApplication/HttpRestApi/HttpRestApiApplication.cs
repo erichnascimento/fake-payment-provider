@@ -1,5 +1,6 @@
 using System.Text.Json;
 using FakePaymentProvider.Domain;
+using FakePaymentProvider.Domain.Boundary.CreateBoleto;
 using FakePaymentProvider.Infra.EntityGateway.Memory;
 using FakePaymentProvider.Library.Date;
 using WebApiApplication.HttpRestApi.Handles.CreatePayment;
@@ -43,6 +44,8 @@ public class HttpRestApiApplication
 
         builder.Services.AddSingleton<ITimeService, SystemTimeService>();
         builder.Services.AddSingleton<IEntityGateway, InMemoryEntityGateway>();
+        builder.Services.AddSingleton<ICreateBoletoUseCase, CreateBoletoUseCase>();
+        builder.Services.AddSingleton<CreatePaymentHandler>();
     }
 
     private static void ConfigureRoutes(WebApplication webApplication)
@@ -50,7 +53,7 @@ public class HttpRestApiApplication
         var v1RouteGroupBuilder = webApplication.MapGroup("/v1");
         var paymentsRouteGroupBuilder = v1RouteGroupBuilder.MapGroup("/payments");
         paymentsRouteGroupBuilder.MapPost("/",
-            new CreatePaymentHandler(serviceProvider: webApplication.Services).Handle);
+            webApplication.Services.GetRequiredService<CreatePaymentHandler>().Handle);
 
         paymentsRouteGroupBuilder.MapGet("/{id}", (string id) =>
         {
