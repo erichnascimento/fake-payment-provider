@@ -11,8 +11,7 @@ public class CreateBoletoUseCase(
 {
     public Task<CreateBoletoResponse> Execute(CreateBoletoRequest request)
     {
-        var boleto = Payment.Create(
-            method: PaymentMethod.Boleto,
+        var boleto = Payment.CreateBoleto(
             amount: request.Amount,
             now: timeService.Now
         );

@@ -11,6 +11,20 @@ public class Payment
 
     public readonly DateTime CreatedAt;
     public DateTime UpdatedAt { get; private set; }
+    
+    public static Payment CreateBoleto(
+        in Money amount,
+        in DateTime now,
+        in Id? id = null
+    )
+    {
+        return Create(
+            method: PaymentMethod.Boleto,
+            amount: amount,
+            now: now,
+            id: id
+        );
+    }
 
     public static Payment Create(
         in PaymentMethod method,
