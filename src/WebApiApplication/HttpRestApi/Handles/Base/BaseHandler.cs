@@ -14,7 +14,7 @@ public abstract class BaseHandler<TRequest, TResponse>
         }
         catch (ArgumentException e)
         {
-            var badRequestResponse = new BadRequestResponse(Message: e.Message);
+            var badRequestResponse = new BadRequestResponse(ErrorMessage: e.Message);
             LogError(request, e, badRequestResponse.StatusCode);
 
             return badRequestResponse.AsResult();

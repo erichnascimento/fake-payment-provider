@@ -1,8 +1,15 @@
+using System.Text.Json.Serialization;
+
 namespace WebApiApplication.HttpRestApi.Handles.Base;
 
-public sealed record BadRequestResponse(string Message) : BaseResponse
+[JsonSerializable(typeof(BadRequestResponse))]
+public sealed record BadRequestResponse(
+    string ErrorMessage,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    string? ErrorCode = null
+) : BaseResponse
 {
-    public override int StatusCode => 400;
-    public override IResult AsResult() => Results.BadRequest(Message);
-    public override string ToLoggableString() => Message;
+    [JsonIgnore] public override int StatusCode => 400;
+    public override IResult AsResult() => Results.BadRequest(this);
+    public override string ToLoggableString() => $"ErrorMessage={ErrorMessage}, ErrorCode={ErrorCode}";
 }

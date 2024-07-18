@@ -21,4 +21,7 @@ namespace WebApiApplication.HttpRestApi;
 
 // Generic responses
 [JsonSerializable(typeof(CreatedResponse))]
+[JsonSerializable(typeof(NotFoundResponse))]
+[JsonSerializable(typeof(BadRequestResponse))]
+[JsonSerializable(typeof(InternalServerErrorResponse))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext;
