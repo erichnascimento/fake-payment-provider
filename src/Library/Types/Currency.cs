@@ -3,8 +3,9 @@ namespace FakePaymentProvider.Library.Types;
 public readonly struct Currency(string code) : IEquatable<Currency>, IComparable<Currency>, IComparable
 {
     public string Code { get; } = ValidateAndReturnOrCry(code);
+    public static Currency Brl => new("BRL");
 
-    public static string ValidateAndReturnOrCry(string code)
+    private static string ValidateAndReturnOrCry(string code)
     {
         if (string.IsNullOrWhiteSpace(code))
         {

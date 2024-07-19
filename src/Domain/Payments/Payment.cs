@@ -2,61 +2,25 @@ using FakePaymentProvider.Library.Types;
 
 namespace FakePaymentProvider.Domain.Payments;
 
-public class Payment
+public abstract class Payment(
+    Id id,
+    Money amount,
+    PaymentStatus status,
+    PaymentMethod method,
+    Payer? payer,
+    DateTime createdAt,
+    DateTime updatedAt)
 {
-    public readonly Id Id;
-    public readonly Money Amount;
-    public PaymentStatus Status { get; private set; }
-    public readonly PaymentMethod Method;
+    public readonly Id Id = id;
+    public readonly Money Amount = amount;
+    public PaymentStatus Status { get; private set; } = status;
+    public readonly PaymentMethod Method = method;
+    public readonly Payer? Payer = payer;
 
-    public readonly DateTime CreatedAt;
-    public DateTime UpdatedAt { get; private set; }
-    
-    public static Payment CreateBoleto(
-        in Money amount,
-        in DateTime now,
-        in Id? id = null
-    )
-    {
-        return Create(
-            method: PaymentMethod.Boleto,
-            amount: amount,
-            now: now,
-            id: id
-        );
-    }
+    public readonly DateTime CreatedAt = createdAt;
+    public DateTime UpdatedAt { get; private set; } = updatedAt;
 
-    public static Payment Create(
-        in PaymentMethod method,
-        in Money amount,
-        in DateTime now,
-        in Id? id = null
-    )
-    {
-        var payment = new Payment(
-            id: id ?? Id.New(),
-            amount: amount,
-            status: PaymentStatus.Creating,
-            method: method,
-            createdAt: now,
-            updatedAt: now
-        );
-        payment.Initialize(now: now);
-
-        return payment;
-    }
-
-    private void Initialize(
-        in DateTime now
-    )
-    {
-        SetStatus(
-            value: PaymentStatus.Pending,
-            now: now
-        );
-    }
-
-    private void SetStatus(PaymentStatus value, DateTime now)
+    protected void SetStatus(PaymentStatus value, DateTime now)
     {
         PaymentStatusTransitionValidator.CheckIsValidTransition(
             from: Status,
@@ -75,23 +39,5 @@ public class Payment
     private void AfterUpdate(DateTime now)
     {
         UpdatedAt = now;
-    }
-
-    private Payment(
-        Id id,
-        Money amount,
-        PaymentStatus status,
-        PaymentMethod method,
-        DateTime createdAt,
-        DateTime updatedAt
-    )
-    {
-        Id = id;
-        Amount = amount;
-        Status = status;
-        Method = method;
-
-        CreatedAt = createdAt;
-        UpdatedAt = updatedAt;
     }
 }

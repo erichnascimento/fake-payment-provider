@@ -55,11 +55,11 @@ public class HttpRestApiApplication
         paymentsRouteGroupBuilder.MapPost("/",
             webApplication.Services.GetRequiredService<CreatePaymentHandler>().Handle);
 
-        paymentsRouteGroupBuilder.MapGet("/{id}", (string id) =>
+        paymentsRouteGroupBuilder.MapGet("/{id}", async (string id) =>
         {
             // TODO: Use query segregation here.
             var entityGateway = webApplication.Services.GetRequiredService<IEntityGateway>();
-            var payment = entityGateway.GetPaymentById(id);
+            var payment = await entityGateway.GetPaymentById(id);
             if (payment is null)
             {
                 return Results.NotFound();
@@ -71,7 +71,7 @@ public class HttpRestApiApplication
                 Status = payment.Status.ToString(),
                 PaymentMethod = payment.Method.ToString(),
                 CreatedAt = payment.CreatedAt,
-                Amount = payment.Amount.Amount,
+                Amount = payment.Amount.Value,
                 Currency = payment.Amount.Currency
             });
         });

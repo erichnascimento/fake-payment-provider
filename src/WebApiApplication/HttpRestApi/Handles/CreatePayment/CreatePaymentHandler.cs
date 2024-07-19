@@ -19,14 +19,9 @@ public class CreatePaymentHandler(
         var createBoletoRequest = new CreateBoletoRequest
         {
             Amount = new Money(
-                amount: request.Amount,
+                value: request.Amount,
                 currency: new Currency(request.Currency)
             ),
-
-            // TODO: Read from request
-
-            CustomerName = "John Doe",
-            CustomerEmail = "johndoe@example.com",
             DueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(3))
         };
 

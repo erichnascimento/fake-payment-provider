@@ -38,6 +38,11 @@ public static class PaymentStatusTransitionValidator
 
     public static void CheckPreConditions(Payment payment, PaymentStatus to)
     {
+        CheckIsValidTransition(
+            from: payment.Status,
+            to: to
+        );
+
         if (to is PaymentStatus.Creating)
         {
             throw new InvalidOperationException("Payment cannot be in Creating state");

@@ -5,9 +5,10 @@ namespace WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 public sealed record CreatePaymentRequest : BaseRequest
 {
-    public required string PaymentMethod;
     public required decimal Amount;
     public required string Currency;
+    public required string PaymentMethod;
+    public required DateOnly DueDate;
 
     [JsonIgnore] public bool IsBoleto => PaymentMethod == "boleto";
 

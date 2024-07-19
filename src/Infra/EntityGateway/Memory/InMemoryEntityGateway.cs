@@ -8,13 +8,15 @@ public class InMemoryEntityGateway : IEntityGateway
 {
     private readonly Dictionary<Id, Payment> _payments = new();
 
-    public Payment? GetPaymentById(Id id)
+    public Task<Payment?> GetPaymentById(Id id)
     {
-        return _payments.GetValueOrDefault(id);
+        return Task.FromResult(_payments.GetValueOrDefault(id));
     }
 
-    public void SavePayment(Payment payment)
+    public Task SavePayment(Payment payment)
     {
         _payments[payment.Id] = payment;
+
+        return Task.CompletedTask;
     }
 }

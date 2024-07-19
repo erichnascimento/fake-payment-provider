@@ -6,16 +6,16 @@ public static class MoneyExtensions
     {
         CheckSameCurrency(money, other);
 
-        return new Money(money.Amount + other.Amount, money.Currency);
+        return new Money(money.Value + other.Value, money.Currency);
     }
 
     public static Money Subtract(this Money money, Money other)
     {
         CheckSameCurrency(money, other);
 
-        return new Money(money.Amount - other.Amount, money.Currency);
+        return new Money(money.Value - other.Value, money.Currency);
     }
-    
+
     private static void CheckSameCurrency(Money money, Money other)
     {
         if (money.Currency != other.Currency)

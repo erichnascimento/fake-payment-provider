@@ -20,7 +20,8 @@ Content-Type: application/json
 {
   "paymentMethod": "boleto",
   "amount": 100,
-  "currency": "BRL"
+  "currency": "BRL",
+  "dueDate": "2024-08-31"
 }
 
 ###
