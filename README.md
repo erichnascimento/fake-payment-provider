@@ -1,5 +1,7 @@
 # Fake Payment Provider
 
+[![.NET](https://github.com/erichnascimento/fake-payment-provider/actions/workflows/dotnet.yml/badge.svg)](https://github.com/erichnascimento/fake-payment-provider/actions/workflows/dotnet.yml)
+
 This is a fake payment provider that simulates a payment provider. It is used for testing purposes.
 
 ## Table of Contents
