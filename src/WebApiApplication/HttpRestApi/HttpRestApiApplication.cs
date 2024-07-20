@@ -1,8 +1,4 @@
-using System.Text.Json;
 using FakePaymentProvider.Domain;
-using FakePaymentProvider.Domain.CreateBoleto;
-using FakePaymentProvider.Infra.EntityGateway.Memory;
-using FakePaymentProvider.Library.Date;
 using WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 namespace WebApiApplication.HttpRestApi;
@@ -18,34 +14,20 @@ public class HttpRestApiApplication
 
     public static HttpRestApiApplication Create(string[] args)
     {
-        return new HttpRestApiApplication(args);
+        return new HttpRestApiApplication(
+            builder: WebApplication.CreateBuilder(args),
+            configurator: new DefaultApplicationConfigurator()
+        );
     }
 
-    private HttpRestApiApplication(string[] args)
+    public HttpRestApiApplication(
+        WebApplicationBuilder builder,
+        IApplicationConfigurator configurator
+    )
     {
-        var builder = WebApplication.CreateBuilder(args);
-        ConfigureServices(builder);
-
-        var webApplication = builder.Build();
-        ConfigureRoutes(webApplication);
-
-        _webApplication = webApplication;
-    }
-
-    private static void ConfigureServices(WebApplicationBuilder builder)
-    {
-        builder.Services.ConfigureHttpJsonOptions(options =>
-        {
-            options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-
-            options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-            options.SerializerOptions.IncludeFields = true;
-        });
-
-        builder.Services.AddSingleton<ITimeService, SystemTimeService>();
-        builder.Services.AddSingleton<IEntityGateway, InMemoryEntityGateway>();
-        builder.Services.AddSingleton<ICreateBoletoUseCase, CreateBoletoUseCase>();
-        builder.Services.AddSingleton<CreatePaymentHandler>();
+        configurator.ConfigureHost(builder);
+        _webApplication = builder.Build();
+        ConfigureRoutes(_webApplication);
     }
 
     private static void ConfigureRoutes(WebApplication webApplication)
