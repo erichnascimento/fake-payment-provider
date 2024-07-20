@@ -1,4 +1,4 @@
-namespace FakePaymentProvider.Domain.Boundary.CreateBoleto;
+namespace FakePaymentProvider.Domain.CreateBoleto;
 
 public interface ICreateBoletoUseCase
 {

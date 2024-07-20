@@ -1,4 +1,4 @@
-using FakePaymentProvider.Domain.Boundary.CreateBoleto;
+using FakePaymentProvider.Domain.CreateBoleto;
 using FakePaymentProvider.Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using WebApiApplication.HttpRestApi.Handles.Base;

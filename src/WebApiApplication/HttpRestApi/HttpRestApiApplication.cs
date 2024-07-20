@@ -1,6 +1,6 @@
 using System.Text.Json;
 using FakePaymentProvider.Domain;
-using FakePaymentProvider.Domain.Boundary.CreateBoleto;
+using FakePaymentProvider.Domain.CreateBoleto;
 using FakePaymentProvider.Infra.EntityGateway.Memory;
 using FakePaymentProvider.Library.Date;
 using WebApiApplication.HttpRestApi.Handles.CreatePayment;

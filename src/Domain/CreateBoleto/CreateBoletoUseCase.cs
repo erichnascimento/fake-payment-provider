@@ -1,9 +1,8 @@
-using FakePaymentProvider.Domain.Boundary.CreateBoleto;
 using FakePaymentProvider.Domain.Payments;
 using FakePaymentProvider.Domain.Types;
 using FakePaymentProvider.Library.Date;
 
-namespace FakePaymentProvider.Domain;
+namespace FakePaymentProvider.Domain.CreateBoleto;
 
 public class CreateBoletoUseCase(
     ITimeService timeService,

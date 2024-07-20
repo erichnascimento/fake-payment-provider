@@ -3,3 +3,5 @@ obj/
 .idea/
 
 FakePaymentProvider.sln.DotSettings.user
+
+.DS_Store
