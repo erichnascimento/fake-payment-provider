@@ -11,16 +11,21 @@ public class CreateBoletoUseCase(
 {
     public async Task<CreateBoletoResponse> Execute(CreateBoletoRequest request)
     {
-        var paymentBoleto = CreatePaymentBoleto(request: request);
-
-        IssueBoleto(paymentBoleto: paymentBoleto);
-
+        var paymentBoleto = CreateAndIssuePaymentBoleto(request: request);
         await entityGateway.SavePayment(payment: paymentBoleto);
 
         return new CreateBoletoResponse
         {
             BoletoId = paymentBoleto.Id
         };
+    }
+
+    private PaymentBoleto CreateAndIssuePaymentBoleto(CreateBoletoRequest request)
+    {
+        var paymentBoleto = CreatePaymentBoleto(request: request);
+        IssueBoleto(paymentBoleto: paymentBoleto);
+
+        return paymentBoleto;
     }
 
     private PaymentBoleto CreatePaymentBoleto(CreateBoletoRequest request)
@@ -44,23 +49,24 @@ public class CreateBoletoUseCase(
         );
 
         paymentBoleto.Issue(info: boletoInfo, now: timeService.Now);
-
-        entityGateway.SavePayment(payment: paymentBoleto);
     }
 
     private static Payer? CreatePayer(CreateBoletoRequest request)
     {
-        return request.HasPayerInfo
-            ? new Payer(
-                Name: request.PayerName,
-                Email: request.PayerEmail,
-                Phone: request.PayerPhoneNumber is not null
-                    ? PersonalPhone.Parse(request.PayerPhoneNumber)
-                    : null,
-                Document: request.PayerDocument is not null
-                    ? PersonalDocument.Parse(request.PayerDocument)
-                    : null
-            )
-            : null;
+        if (request.HasPayerInfo is not true)
+        {
+            return null;
+        }
+
+        return new Payer(
+            Name: request.PayerName,
+            Email: request.PayerEmail,
+            Phone: request.PayerPhoneNumber is not null
+                ? PersonalPhone.Parse(request.PayerPhoneNumber)
+                : null,
+            Document: request.PayerDocument is not null
+                ? PersonalDocument.Parse(request.PayerDocument)
+                : null
+        );
     }
 }
