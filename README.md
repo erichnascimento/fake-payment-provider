@@ -16,6 +16,7 @@ This is a fake payment provider that simulates a payment provider. It is used fo
     - [Prerequisites](#prerequisites)
     - [Running the server](#running-the-server)
     - [Running the tests](#running-the-tests)
+  - [Roadmap](#roadmap)
   - [License](#license)
 
 ## Installation
@@ -185,11 +186,62 @@ TODO
 dotnet run
 ```
 
+The server will start at `http://localhost:5246`.
+
+You can test the API using IntelliJ HTTP Client file at `./http-client/fake-payment-provider.http`.
+
+#### Create a boleto payment example:
+
+```http
+POST http://localhost:5246/v1/payments
+Content-Type: application/json
+
+{
+  "paymentMethod": "boleto",
+  "amount": 100,
+  "currency": "BRL",
+  "dueDate": "2024-08-31"
+}
+
+### Response
+
+HTTP/1.1 201 Created
+Content-Type: application/json; charset=utf-8
+
+{
+  "id": "e5a78634-6d25-43b0-8d4f-c1bc57496d4c",
+  "status": "pending",
+  "boleto": {
+    "number": "34191.09008 63521.510047 91020.150008 5 12345678901234",
+    "barcode": "34191510047910201500085012345678901234",
+    "dueDate": "2024-08-31"
+  }
+}
+
+### Server logs
+
+2024-07-20 01:13:37.478 INFO  Http Request:             request={PaymentMethod=boleto, Amount=100, Currency=BRL ... }
+2024-07-20 01:13:37.480 INFO  Http Request: status=201  request={PaymentMethod=boleto, Amount=100, Currency=BRL}  response={Id=e5a78634-6d25-43b0-8d4f-c1bc57496d4c, Status=pending ... }
+
+```
+
 ### Running the tests
 
 ```bash
 dotnet test
 ```
+
+## Roadmap
+
+- [ ] Implements the payment boleto creation (in progress :hourglass_flowing_sand:)
+- [ ] Implements the payment boleto confirmation
+- [ ] Implements the payment credit card creation
+- [ ] Implements the payment credit card confirmation
+- [ ] Implements the payment credit card cancelation
+- [ ] Implements the payment credit card refund
+- [ ] Implements error simulation
+- [ ] Implements the payment status query
+- [ ] Implements the payment status webhook
 
 ## License
 
