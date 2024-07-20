@@ -165,6 +165,16 @@ Response:
 
 ## Development
 
+The architecture of this project is based on the [Clean Architecture principles](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+
+![](https://github.com/erichnascimento/fake-payment-provider/blob/main/assets/clean-arch-diagram.jpeg)
+
+The project is divided into the following layers:
+
+- **Domain**: Contains the business rules and entities of the application.
+- **Infra**: Contains the concrete implementation of the interfaces defined in the Domain layer.
+- **WebApiApplication**: Contains the web API and the presentation layer of the application.
+
 ### Prerequisites
 
 TODO
