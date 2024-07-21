@@ -35,11 +35,11 @@ public record PersonalPhone(
             throw new NotImplementedException("Only Brazilian phone numbers are supported");
         }
 
-        if (fullNumber.Length is 11)
+        if (fullNumber.Length is 13)
         {
             // mobile number
-            var areaCode = fullNumber.Substring(2, 2);
-            var number = fullNumber.Substring(4);
+            var areaCode = fullNumber[2..4];
+            var number = fullNumber[4..];
 
             return new PersonalPhone(
                 AreaCode: areaCode,
@@ -49,11 +49,11 @@ public record PersonalPhone(
             );
         }
 
-        if (fullNumber.Length is 10)
+        if (fullNumber.Length is 12)
         {
             // landline number
-            var areaCode = fullNumber.Substring(2, 2);
-            var number = fullNumber.Substring(4);
+            var areaCode = fullNumber[2..4];
+            var number = fullNumber[4..];
 
             return new PersonalPhone(
                 AreaCode: areaCode,

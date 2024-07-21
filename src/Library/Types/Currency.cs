@@ -1,28 +1,49 @@
 namespace FakePaymentProvider.Library.Types;
 
-public readonly struct Currency(string code) : IEquatable<Currency>, IComparable<Currency>, IComparable
+public readonly struct Currency : IEquatable<Currency>, IComparable<Currency>, IComparable
 {
-    public string Code { get; } = ValidateAndReturnOrCry(code);
+    private readonly string _code;
     public static Currency Brl => new("BRL");
+    public static Currency Usd => new("USD");
+    public static Currency Eur => new("EUR");
 
-    private static string ValidateAndReturnOrCry(string code)
+    public Currency(string code)
+    {
+        Validate(code);
+        _code = code;
+    }
+
+    private static void Validate(string code)
     {
         if (string.IsNullOrWhiteSpace(code))
         {
             throw new ArgumentException("Currency code cannot be null or empty", nameof(code));
         }
+        
+        if (code.Length != 3)
+        {
+            throw new ArgumentException("Currency code must have 3 characters", nameof(code));
+        }
 
-        return code;
+        switch (code)
+        {
+            case "BRL":
+            case "USD":
+            case "EUR":
+                break;
+            default:
+                throw new ArgumentException("Currency code is invalid", nameof(code));
+        }
     }
 
     public bool Equals(Currency other)
     {
-        return Code == other.Code;
+        return _code == other._code;
     }
 
     public int CompareTo(Currency other)
     {
-        return string.Compare(Code, other.Code, StringComparison.Ordinal);
+        return string.Compare(_code, other._code, StringComparison.Ordinal);
     }
 
     public int CompareTo(object? obj)
@@ -39,7 +60,7 @@ public readonly struct Currency(string code) : IEquatable<Currency>, IComparable
 
     public override int GetHashCode()
     {
-        return Code.GetHashCode();
+        return _code.GetHashCode();
     }
 
     public static bool operator ==(Currency left, Currency right)
@@ -52,8 +73,8 @@ public readonly struct Currency(string code) : IEquatable<Currency>, IComparable
         return !(left == right);
     }
 
-    public static implicit operator string(Currency currency) => currency.Code;
+    public static implicit operator string(Currency currency) => currency._code;
     public static implicit operator Currency(string code) => new(code);
 
-    public override string ToString() => Code;
+    public override string ToString() => _code;
 }
