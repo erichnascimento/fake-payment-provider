@@ -17,7 +17,7 @@ public sealed class CreatePaymentHandler(
             _ => throw new ArgumentException("Invalid payment method")
         };
     }
-    
+
     private async Task<CreatePaymentResponse> HandleCreateBoleto(CreatePaymentRequest request)
     {
         var createBoletoRequest = BuildCreateBoletoRequest(request: request);
@@ -25,18 +25,26 @@ public sealed class CreatePaymentHandler(
 
         return new CreatePaymentResponse
         {
-            Id = response.BoletoId
+            Id = response.BoletoId,
+            Status = response.Status,
+            Boleto = new BoletoInfo
+            {
+                Number = response.Boleto.Number,
+                Barcode = response.Boleto.Barcode,
+                DueDate = response.Boleto.DueDate
+            },
+            Pix = null
         };
     }
-    
+
     private static CreateBoletoRequest BuildCreateBoletoRequest(CreatePaymentRequest request)
     {
         var payerDocument = request.Payer?.Document?.Type switch
         {
-            "CPF" or "CNPJ"  => request.Payer.Document.Number,
+            "CPF" or "CNPJ" => request.Payer.Document.Number,
             _ => throw new ArgumentException("Invalid document type for bolero payer")
         };
-        
+
         var dueDate = request.DueDate ?? throw new ArgumentException("DueDate is required for boleto");
 
         return new CreateBoletoRequest

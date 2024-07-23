@@ -14,10 +14,7 @@ public class CreateBoletoUseCase(
         var paymentBoleto = CreateAndIssuePaymentBoleto(request: request);
         await entityGateway.SavePayment(payment: paymentBoleto);
 
-        return new CreateBoletoResponse
-        {
-            BoletoId = paymentBoleto.Id
-        };
+        return CreateResponse(payment: paymentBoleto);
     }
 
     private PaymentBoleto CreateAndIssuePaymentBoleto(CreateBoletoRequest request)
@@ -43,7 +40,7 @@ public class CreateBoletoUseCase(
     private void IssueBoleto(PaymentBoleto paymentBoleto)
     {
         // TODO: Implement a real BoletoInfo generator
-        var boletoInfo = new BoletoInfo(
+        var boletoInfo = new Payments.BoletoInfo(
             Number: "34191.09008 63521.510047 91020.150008 5 12345678901234",
             Barcode: "34191510047910201500085012345678901234"
         );
@@ -68,5 +65,27 @@ public class CreateBoletoUseCase(
                 ? PersonalDocument.Parse(request.PayerDocument)
                 : null
         );
+    }
+
+    private static CreateBoletoResponse CreateResponse(PaymentBoleto payment)
+    {
+        if (payment.Info is null)
+        {
+            throw new InvalidOperationException("Boleto info is missing");
+        }
+
+        var boletoInfo = new BoletoInfo
+        {
+            Number = payment.Info.Number,
+            Barcode = payment.Info.Barcode,
+            DueDate = payment.DueDate ?? throw new InvalidOperationException("DueDate is required")
+        };
+
+        return new CreateBoletoResponse
+        {
+            BoletoId = payment.Id,
+            Status = payment.Status.ToString(),
+            Boleto = boletoInfo
+        };
     }
 }
