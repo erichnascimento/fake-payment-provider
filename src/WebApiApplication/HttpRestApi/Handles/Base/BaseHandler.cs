@@ -36,7 +36,7 @@ public abstract class BaseHandler<TRequest, TResponse>
             return internalServerErrorResponse.AsResult();
         }
     }
-    
+
     protected abstract Task<TResponse> DoHandle(TRequest request);
 
     private static void LogResponse(TRequest request, TResponse response)
@@ -48,7 +48,7 @@ public abstract class BaseHandler<TRequest, TResponse>
     private static void LogError(TRequest request, Exception exception, int statusCode)
     {
         Console.WriteLine(
-            $"Http Request: status={statusCode} request={{{request.ToLoggableString()}}} error={{{exception.Message}}}");
+            $"Http Request: status={statusCode} request={{{request.ToLoggableString()}}} error={{{exception.Message}}} stackTrace={{{exception.StackTrace}}}");
     }
 
     private static void LogRequest(TRequest request)

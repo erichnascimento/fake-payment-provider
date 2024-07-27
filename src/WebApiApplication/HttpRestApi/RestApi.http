@@ -2,8 +2,12 @@
 
 @lastPaymentId = ""
 
+### Create a new payment
+
 < {%
+
  
+
 %}
 
 POST {{RestApi_HostAddress}}/v1/payments
@@ -34,19 +38,37 @@ Content-Type: application/json
       "zipCode": "80100200"
     }
   },
-  "postbackUrl": "http://localhost:3000/postback?key=1234567890"
+  "postbackUrl": "{{RestApi_HostAddress}}/v1/echo?paymentId={{response.body.id}}"
 }
 
 > {%
     client.global.set("lastPaymentId", response.body.valueOf().id)
 %}
 
-###
+### Get the last payment
 
 < {%
 
     request.variables.set("lastPaymentId", client.global.get("lastPaymentId"))
- 
- %}
+
+%}
 
 GET {{RestApi_HostAddress}}/v1/payments/{{lastPaymentId}}
+
+### Confirm the last payment
+
+< {%
+
+    request.variables.set("lastPaymentId", client.global.get("lastPaymentId"))
+
+%}
+
+POST {{RestApi_HostAddress}}/v1/payments/{{lastPaymentId}}/confirm
+Content-Type: application/json
+
+{
+  "paymentId": "{{lastPaymentId}}",
+  "paidAmount": 100,
+  "currency": "BRL",
+  "paidOn": "2024-07-22"
+}

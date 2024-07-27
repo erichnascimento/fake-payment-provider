@@ -1,4 +1,5 @@
 using FakePaymentProvider.Domain;
+using WebApiApplication.HttpRestApi.Handles.ConfirmPayment;
 using WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 namespace WebApiApplication.HttpRestApi;
@@ -57,6 +58,20 @@ public class HttpRestApiApplication
                 Amount = payment.Amount.Value,
                 Currency = payment.Amount.Currency
             });
+        });
+
+        paymentsRouteGroupBuilder.MapPost("/{id}/confirm",
+            webApplication.Services.GetRequiredService<ConfirmPaymentHandler>().Handle);
+
+        // Echo route for testing purposes.
+        v1RouteGroupBuilder.Map("/echo", async context =>
+        {
+            var request = context.Request;
+            var requestBodyContent = await new StreamReader(request.Body).ReadToEndAsync();
+
+            // TODO: respond with the request content
+
+            Console.WriteLine($"Echo endpoint: request.Body={requestBodyContent}");
         });
     }
 }

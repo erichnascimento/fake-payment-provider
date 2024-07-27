@@ -167,7 +167,7 @@ Response:
   "paymentCode": "123456",
   "status": "confirmed",
   "paidAmount": 100.01,
-  "confirmationDate": "2021-12-31"
+  "paidOn": "2021-12-31"
 }
 ```
 

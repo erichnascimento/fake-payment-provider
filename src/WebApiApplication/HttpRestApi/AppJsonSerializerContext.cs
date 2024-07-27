@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using WebApiApplication.HttpRestApi.Handles.Base;
+using WebApiApplication.HttpRestApi.Handles.ConfirmPayment;
 using WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
 namespace WebApiApplication.HttpRestApi;
@@ -18,8 +19,11 @@ namespace WebApiApplication.HttpRestApi;
 [JsonSerializable(typeof(CreatePaymentRequest))]
 [JsonSerializable(typeof(CreatePaymentResponse))]
 [JsonSerializable(typeof(GetPaymentResponse))]
+[JsonSerializable(typeof(ConfirmPaymentRequest))]
+[JsonSerializable(typeof(ConfirmPaymentResponse))]
 
 // Generic responses
+[JsonSerializable(typeof(OkResponse))]
 [JsonSerializable(typeof(CreatedResponse))]
 [JsonSerializable(typeof(NotFoundResponse))]
 [JsonSerializable(typeof(BadRequestResponse))]
