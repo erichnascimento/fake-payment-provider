@@ -57,18 +57,22 @@ public sealed class PaymentBoleto : Payment
     }
 
     public static PaymentBoleto Create(
+        string paymentCode,
         Money amount,
         DateTime now,
         DateOnly dueDate,
         Payer? payer,
+        Uri? postbackUrl = null,
         Id? id = null
     )
     {
         var paymentBoleto = new PaymentBoleto(
             id: id ?? new Id(),
+            paymentCode: paymentCode,
             amount: amount,
             status: PaymentStatus.Creating,
             payer: payer,
+            postbackUrl: postbackUrl,
             dueDate: dueDate,
             info: null,
             paidAmount: null,
@@ -82,10 +86,12 @@ public sealed class PaymentBoleto : Payment
 
     private PaymentBoleto(
         Id id,
+        string paymentCode,
         Money amount,
         DateOnly dueDate,
         PaymentStatus status,
         Payer? payer,
+        Uri? postbackUrl,
         BoletoInfo? info,
         Money? paidAmount,
         DateOnly? paidOn,
@@ -93,10 +99,12 @@ public sealed class PaymentBoleto : Payment
         DateTime updatedAt
     ) : base(
         id: id,
+        paymentCode: paymentCode,
         amount: amount,
         status: status,
         method: PaymentMethod.Boleto,
         payer: payer,
+        postbackUrl: postbackUrl,
         createdAt: createdAt,
         updatedAt: updatedAt
     )

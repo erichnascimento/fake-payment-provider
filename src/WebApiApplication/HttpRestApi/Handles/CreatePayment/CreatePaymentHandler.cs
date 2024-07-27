@@ -26,6 +26,7 @@ public sealed class CreatePaymentHandler(
         return new CreatePaymentResponse
         {
             Id = response.BoletoId,
+            PaymentCode = response.PaymentCode,
             Status = response.Status,
             Boleto = new BoletoInfo
             {
@@ -49,6 +50,7 @@ public sealed class CreatePaymentHandler(
 
         return new CreateBoletoRequest
         {
+            PaymentCode = request.PaymentCode,
             Amount = new Money(
                 value: request.Amount,
                 currency: new Currency(request.Currency)
@@ -57,7 +59,10 @@ public sealed class CreatePaymentHandler(
             PayerName = request.Payer?.Name,
             PayerEmail = request.Payer?.Email,
             PayerPhoneNumber = request.Payer?.CellPhoneNumber,
-            PayerDocument = payerDocument
+            PayerDocument = payerDocument,
+            PostbackUrl = request.PostbackUrl is not null 
+                ? new Uri(uriString: request.PostbackUrl) 
+                : null
         };
     }
 }

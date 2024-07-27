@@ -11,6 +11,7 @@ Content-Type: application/json
 
 {
   "paymentMethod": "boleto",
+  "paymentCode": "1234567890",
   "amount": 100,
   "currency": "BRL",
   "dueDate": "2024-08-31",
@@ -32,7 +33,8 @@ Content-Type: application/json
       "country": "BR",
       "zipCode": "80100200"
     }
-  }
+  },
+  "postbackUrl": "http://localhost:3000/postback?key=1234567890"
 }
 
 > {%

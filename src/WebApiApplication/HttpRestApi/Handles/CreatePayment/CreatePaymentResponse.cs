@@ -6,6 +6,7 @@ namespace WebApiApplication.HttpRestApi.Handles.CreatePayment;
 public sealed record CreatePaymentResponse : CreatedResponse
 {
     public required string Id;
+    public required string PaymentCode;
     public required string Status;
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

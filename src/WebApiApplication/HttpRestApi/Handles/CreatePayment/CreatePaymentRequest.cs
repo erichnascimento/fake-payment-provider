@@ -8,9 +8,11 @@ public sealed record CreatePaymentRequest : BaseRequest
     public required decimal Amount;
     public required string Currency;
     public required string PaymentMethod;
+    public required string PaymentCode;
     public DateOnly? DueDate;
     public bool? WithPix;
     public Payer? Payer;
+    public string? PostbackUrl;
 
     public override void Validate()
     {
@@ -29,6 +31,11 @@ public sealed record CreatePaymentRequest : BaseRequest
                 throw new ArgumentException("PaymentMethod is invalid");
         }
 
+        if (string.IsNullOrWhiteSpace(PaymentCode))
+        {
+            throw new ArgumentException("PaymentCode is required");
+        }
+
         if (Amount < 0)
         {
             throw new ArgumentException("Amount cannot be negative");
@@ -37,6 +44,11 @@ public sealed record CreatePaymentRequest : BaseRequest
         if (string.IsNullOrWhiteSpace(Currency))
         {
             throw new ArgumentException("Currency is required");
+        }
+        
+        if (PostbackUrl is not null && !Uri.TryCreate(PostbackUrl, UriKind.Absolute, out _))
+        {
+            throw new ArgumentException("PostbackUrl is invalid");
         }
         
         // Boleto

@@ -30,9 +30,11 @@ public class CreateBoletoUseCase(
         var payer = CreatePayer(request);
 
         return PaymentBoleto.Create(
+            paymentCode: request.PaymentCode,
             amount: request.Amount,
             dueDate: request.DueDate,
             payer: payer,
+            postbackUrl: request.PostbackUrl,
             now: timeService.Now
         );
     }
@@ -84,6 +86,7 @@ public class CreateBoletoUseCase(
         return new CreateBoletoResponse
         {
             BoletoId = payment.Id,
+            PaymentCode = payment.PaymentCode,
             Status = payment.Status.ToString(),
             Boleto = boletoInfo
         };

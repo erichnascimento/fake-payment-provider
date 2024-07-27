@@ -27,11 +27,13 @@ public class PaymentBoletoTests
         Assert.Multiple(() =>
         {
             Assert.That(paymentBoleto.Id, Is.EqualTo(expectedPaymentId));
+            Assert.That(paymentBoleto.PaymentCode, Is.EqualTo("abc123"));
             Assert.That(paymentBoleto.Amount.Currency, Is.EqualTo(Currency.Brl));
             Assert.That(paymentBoleto.Amount.Value, Is.EqualTo(100));
             Assert.That(paymentBoleto.Status, Is.EqualTo(PaymentStatus.Creating));
             Assert.That(paymentBoleto.Method, Is.EqualTo(PaymentMethod.Boleto));
             Assert.That(paymentBoleto.Payer, Is.EqualTo(expectedPayer));
+            Assert.That(paymentBoleto.PostbackUrl, Is.EqualTo(new Uri("https://example.com/postback")));
             Assert.That(paymentBoleto.CreatedAt, Is.EqualTo(now));
             Assert.That(paymentBoleto.UpdatedAt, Is.EqualTo(now));
             Assert.That(paymentBoleto.Info, Is.Null);
@@ -149,11 +151,13 @@ public class PaymentBoletoTests
         var today = DateOnly.FromDateTime(now);
 
         return PaymentBoleto.Create(
+            paymentCode: "abc123",
             amount: Money.NewBrl(100),
             dueDate: today.AddDays(5),
             payer: payer,
             now: now,
-            id: paymentId
+            id: paymentId,
+            postbackUrl: new Uri("https://example.com/postback")
         );
     }
 

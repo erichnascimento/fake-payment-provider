@@ -4,18 +4,22 @@ namespace FakePaymentProvider.Domain.Payments;
 
 public abstract class Payment(
     Id id,
+    string paymentCode,
     Money amount,
     PaymentStatus status,
     PaymentMethod method,
     Payer? payer,
+    Uri? postbackUrl,
     DateTime createdAt,
     DateTime updatedAt)
 {
     public readonly Id Id = id;
+    public readonly string PaymentCode = paymentCode;
     public readonly Money Amount = amount;
     public PaymentStatus Status { get; private set; } = status;
     public readonly PaymentMethod Method = method;
     public readonly Payer? Payer = payer;
+    public readonly Uri? PostbackUrl = postbackUrl;
 
     public readonly DateTime CreatedAt = createdAt;
     public DateTime UpdatedAt { get; private set; } = updatedAt;

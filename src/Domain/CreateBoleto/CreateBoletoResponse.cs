@@ -5,6 +5,7 @@ namespace FakePaymentProvider.Domain.CreateBoleto;
 public sealed record CreateBoletoResponse
 {
     public required Id BoletoId { get; init; }
+    public required string PaymentCode { get; init; }
     public required string Status { get; init; }
     public required BoletoInfo Boleto { get; init; }
     public PixInfo? Pix { get; init; }
