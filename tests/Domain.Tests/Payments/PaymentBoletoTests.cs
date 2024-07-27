@@ -69,14 +69,14 @@ public class PaymentBoletoTests
         // Arrange
         var now = DateTime.UtcNow;
         var paymentBoleto = CreateThatPaymentBoletoForTest(now: now);
-        var expectedInfo = new BoletoInfo(
+        var boletoInfo = new BoletoInfo(
             Number: "12345678901234567890123456789012345678901234567",
             Barcode: "12345678901234567890123456789012345678901234567"
         );
-        paymentBoleto.Issue(info: expectedInfo, now: now);
+        paymentBoleto.Issue(info: boletoInfo, now: now);
 
         // Act
-        var issueAction = () => paymentBoleto.Issue(info: expectedInfo, now: now);
+        var issueAction = () => paymentBoleto.Issue(info: boletoInfo, now: now);
 
         // Arrange
         Assert.That(issueAction, Throws.InvalidOperationException);
@@ -114,13 +114,13 @@ public class PaymentBoletoTests
         // Arrange
         var now = DateTime.UtcNow;
         var paymentBoleto = CreateThatAlreadyPaidPaymentBoletoForTest(now: now);
-        var expectedPaidAmount = Money.NewBrl(100);
-        var expectedPaidOn = paymentBoleto.DueDate!.Value;
+        var paidAmount = Money.NewBrl(100);
+        var paidOn = paymentBoleto.DueDate!.Value;
 
         // Act
         var action = () => paymentBoleto.Pay(
-            paidAmount: expectedPaidAmount,
-            paidOn: expectedPaidOn,
+            paidAmount: paidAmount,
+            paidOn: paidOn,
             now: now
         );
 
