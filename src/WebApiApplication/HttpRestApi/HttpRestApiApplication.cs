@@ -37,6 +37,7 @@ public class HttpRestApiApplication
         paymentsRouteGroupBuilder.MapPost("/",
             webApplication.Services.GetRequiredService<CreatePaymentHandler>().Handle);
 
+        // TODO: extract this to a handler like CreatePaymentHandler.
         paymentsRouteGroupBuilder.MapGet("/{id}", async (string id) =>
         {
             // TODO: Use query segregation here.

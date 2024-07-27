@@ -182,6 +182,7 @@ The project is divided into the following layers:
 - **Domain**: Contains the business rules and entities of the application.
 - **Infra**: Contains the concrete implementation of the interfaces defined in the Domain layer.
 - **WebApiApplication**: Contains the web API and the presentation layer of the application.
+- **Library**: Contains the shared code between the layers.
 
 ### Prerequisites
 
