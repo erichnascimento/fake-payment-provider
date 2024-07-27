@@ -69,7 +69,9 @@ Request body:
       "cvc": "123",
       "store": true
     }
-  }
+  },
+  "paymentCode": "123456",
+  "postbackUrl": "https://localhost:3000/postback?t=a4577&paymentCode=123456"
 }
 ```
 
@@ -79,6 +81,7 @@ Response:
 ```json
 {
   "id": "e5a78634-6d25-43b0-8d4f-c1bc57496d4c",
+  "paymentCode": "123456",
   "status": "confirmed",
   "authorizationCode": "123456",
   "cardToken": "f7b1b8b0-1b7b-4b6b-8b1b-0b1b7b4b6b8b"
@@ -114,7 +117,9 @@ Request body:
       "country": "BR",
       "zipCode": "80100200"
     }
-  }
+  },
+  "paymentCode": "123456",
+  "postbackUrl": "https://localhost:3000/postback?t=a4577&paymentCode=123456"
 }
 ```
 
@@ -124,6 +129,7 @@ Response:
 ```json
 {
   "id": "e5a78634-6d25-43b0-8d4f-c1bc57496d4c",
+  "paymentCode": "123456",
   "status": "pending",
   "boleto": {
     "number": "34191.09008 63521.510047 91020.150008 5 12345678901234",
@@ -158,6 +164,7 @@ Response:
 ```json
 {
   "id": "e5a78634-6d25-43b0-8d4f-c1bc57496d4c",
+  "paymentCode": "123456",
   "status": "confirmed",
   "paidAmount": 100.01,
   "confirmationDate": "2021-12-31"
@@ -202,9 +209,11 @@ Content-Type: application/json
   "currency": "BRL",
   "dueDate": "2024-08-31"
 }
+```
 
-### Response
+#### Response
 
+```http
 HTTP/1.1 201 Created
 Content-Type: application/json; charset=utf-8
 
@@ -217,12 +226,13 @@ Content-Type: application/json; charset=utf-8
     "dueDate": "2024-08-31"
   }
 }
+```
 
-### Server logs
+#### Server logs
 
+```log
 2024-07-20 01:13:37.478 INFO  Http Request:             request={PaymentMethod=boleto, Amount=100, Currency=BRL ... }
 2024-07-20 01:13:37.480 INFO  Http Request: status=201  request={PaymentMethod=boleto, Amount=100, Currency=BRL}  response={Id=e5a78634-6d25-43b0-8d4f-c1bc57496d4c, Status=pending ... }
-
 ```
 
 ### Running the tests
@@ -233,8 +243,8 @@ dotnet test
 
 ## Roadmap
 
-- [ ] Implements the payment boleto creation (in progress :hourglass_flowing_sand:)
-- [ ] Implements the payment boleto confirmation
+- [x] Implements the payment boleto creation :checkered_flag:
+- [ ] Implements the payment boleto confirmation (in progress :hourglass_flowing_sand:)
 - [ ] Implements the payment credit card creation
 - [ ] Implements the payment credit card confirmation
 - [ ] Implements the payment credit card cancelation
