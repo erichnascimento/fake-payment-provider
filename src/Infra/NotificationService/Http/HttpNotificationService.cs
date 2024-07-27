@@ -24,7 +24,7 @@ public sealed class HttpNotificationService(
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true,
-                TypeInfoResolver = WeatherForecastContext.Default
+                TypeInfoResolver = HttpNotificationServiceContext.Default
             }
         );
 
@@ -45,6 +45,6 @@ public sealed record NotifyPaymentConfirmedRequestBody(
 );
 
 [JsonSerializable(typeof(NotifyPaymentConfirmedRequestBody))]
-public partial class WeatherForecastContext : JsonSerializerContext
+public partial class HttpNotificationServiceContext : JsonSerializerContext
 {
 }
