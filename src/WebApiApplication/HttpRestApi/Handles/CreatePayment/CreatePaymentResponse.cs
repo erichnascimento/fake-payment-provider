@@ -27,6 +27,7 @@ public sealed record BoletoInfo
 {
     public required string Number;
     public required string Barcode;
+    public required string DigitableLine;
     public required DateOnly DueDate;
 }
 

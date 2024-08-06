@@ -70,7 +70,8 @@ public class PaymentBoletoTests
         var now = DateTime.UtcNow;
         var paymentBoleto = CreateThatPaymentBoletoForTest(now: now);
         var boletoInfo = new BoletoInfo(
-            Number: "12345678901234567890123456789012345678901234567",
+            Number: "12345678901234",
+            DigitableLine: "34191.09008 63521.510047 91020.150008 5 12345678901234",
             Barcode: "12345678901234567890123456789012345678901234567"
         );
         paymentBoleto.Issue(info: boletoInfo, now: now);
@@ -164,7 +165,8 @@ public class PaymentBoletoTests
     private static BoletoInfo CreateThatBoletoInfoForTest()
     {
         return new BoletoInfo(
-            Number: "12345678901234567890123456789012345678901234567",
+            Number: "12345678901234",
+            DigitableLine: "34191.09008 63521.510047 91020.150008 5 12345678901234",
             Barcode: "12345678901234567890123456789012345678901234567"
         );
     }

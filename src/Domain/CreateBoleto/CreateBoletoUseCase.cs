@@ -43,7 +43,8 @@ public class CreateBoletoUseCase(
     {
         // TODO: Implement a real BoletoInfo generator
         var boletoInfo = new Payments.BoletoInfo(
-            Number: "34191.09008 63521.510047 91020.150008 5 12345678901234",
+            Number: "12345678901234",
+            DigitableLine: "34191.09008 63521.510047 91020.150008 5 12345678901234",
             Barcode: "34191510047910201500085012345678901234"
         );
 
@@ -80,6 +81,7 @@ public class CreateBoletoUseCase(
         {
             Number = payment.Info.Number,
             Barcode = payment.Info.Barcode,
+            DigitableLine = payment.Info.DigitableLine,
             DueDate = payment.DueDate ?? throw new InvalidOperationException("DueDate is required")
         };
 

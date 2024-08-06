@@ -1,4 +1,5 @@
 using FakePaymentProvider.Domain;
+using FakePaymentProvider.Domain.Payments;
 using WebApiApplication.HttpRestApi.Handles.ConfirmPayment;
 using WebApiApplication.HttpRestApi.Handles.CreatePayment;
 
@@ -49,6 +50,8 @@ public class HttpRestApiApplication
                 return Results.NotFound();
             }
 
+            var paymentBoleto = payment as PaymentBoleto;
+
             return Results.Ok(new GetPaymentResponse
             {
                 Id = payment.Id,
@@ -56,7 +59,9 @@ public class HttpRestApiApplication
                 PaymentMethod = payment.Method.ToString(),
                 CreatedAt = payment.CreatedAt,
                 Amount = payment.Amount.Value,
-                Currency = payment.Amount.Currency
+                Currency = payment.Amount.Currency,
+                PaidAmount = paymentBoleto?.PaidAmount?.Value,
+                PaidOn = paymentBoleto?.PaidOn
             });
         });
 
@@ -84,4 +89,6 @@ public sealed record GetPaymentResponse
     public required DateTime CreatedAt;
     public required decimal Amount;
     public required string Currency;
+    public decimal? PaidAmount;
+    public DateOnly? PaidOn;
 }

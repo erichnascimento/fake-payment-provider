@@ -35,7 +35,7 @@ Content-Type: application/json
       "city": "São Paulo",
       "state": "SP",
       "country": "BR",
-      "zipCode": "80100200"
+      "postalCode": "80100200"
     }
   },
   "postbackUrl": "{{RestApi_HostAddress}}/v1/echo?paymentId={{response.body.id}}"
@@ -54,6 +54,10 @@ Content-Type: application/json
 %}
 
 GET {{RestApi_HostAddress}}/v1/payments/{{lastPaymentId}}
+
+> {%
+    client.global.set("lastPaymentId", response.body.valueOf().id)
+%}
 
 ### Confirm the last payment
 

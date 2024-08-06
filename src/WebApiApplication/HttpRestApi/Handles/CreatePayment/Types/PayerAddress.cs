@@ -8,6 +8,6 @@ public sealed record PayerAddress
     public required string Neighborhood;
     public required string City;
     public required string State;
-    public required string ZipCode;
+    public required string PostalCode;
     public required string Country;
 }

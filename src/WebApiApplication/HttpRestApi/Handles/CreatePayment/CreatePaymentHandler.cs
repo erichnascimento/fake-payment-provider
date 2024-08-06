@@ -32,6 +32,7 @@ public sealed class CreatePaymentHandler(
             {
                 Number = response.Boleto.Number,
                 Barcode = response.Boleto.Barcode,
+                DigitableLine = response.Boleto.DigitableLine,
                 DueDate = response.Boleto.DueDate
             },
             Pix = null
@@ -60,8 +61,8 @@ public sealed class CreatePaymentHandler(
             PayerEmail = request.Payer?.Email,
             PayerPhoneNumber = request.Payer?.CellPhoneNumber,
             PayerDocument = payerDocument,
-            PostbackUrl = request.PostbackUrl is not null 
-                ? new Uri(uriString: request.PostbackUrl) 
+            PostbackUrl = request.PostbackUrl is not null
+                ? new Uri(uriString: request.PostbackUrl)
                 : null
         };
     }

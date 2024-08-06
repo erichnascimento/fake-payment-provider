@@ -46,7 +46,7 @@ public sealed class PaymentBoleto : Payment
 
         if (paidAmount != Amount)
         {
-            throw new InvalidOperationException("Paid amount cannot be greater than the payment amount");
+            throw new InvalidOperationException("Paid amount cannot be different from the payment amount");
         }
 
         var today = DateOnly.FromDateTime(now);

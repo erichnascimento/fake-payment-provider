@@ -130,10 +130,11 @@ Response:
 {
   "id": "e5a78634-6d25-43b0-8d4f-c1bc57496d4c",
   "paymentCode": "123456",
-  "status": "pending",
+  "status": "Pending",
   "boleto": {
-    "number": "34191.09008 63521.510047 91020.150008 5 12345678901234",
+    "number": "12345678901234",
     "barcode": "34191510047910201500085012345678901234",
+    "digitableLine": "34191.09008 63521.510047 91020.150008 5 12345678901234",
     "dueDate": "2021-12-31"
   },
   "pix": {
@@ -220,7 +221,7 @@ Content-Type: application/json; charset=utf-8
 
 {
   "id": "e5a78634-6d25-43b0-8d4f-c1bc57496d4c",
-  "status": "pending",
+  "status": "Pending",
   "boleto": {
     "number": "34191.09008 63521.510047 91020.150008 5 12345678901234",
     "barcode": "34191510047910201500085012345678901234",
@@ -245,14 +246,13 @@ dotnet test
 ## Roadmap
 
 - [x] Implements the payment boleto creation :checkered_flag:
-- [ ] Implements the payment boleto confirmation (in progress :hourglass_flowing_sand:)
-- [ ] Implements the payment credit card creation
+- [x] Implements the payment boleto confirmation :checkered_flag:
+- [ ] Implements the payment credit card creation  (in progress :hourglass_flowing_sand:)
 - [ ] Implements the payment credit card confirmation
 - [ ] Implements the payment credit card cancelation
 - [ ] Implements the payment credit card refund
 - [ ] Implements error simulation
-- [ ] Implements the payment status query
-- [ ] Implements the payment status webhook
+
 
 ## License
 

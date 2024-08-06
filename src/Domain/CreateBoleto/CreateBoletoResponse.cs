@@ -15,6 +15,7 @@ public sealed record BoletoInfo
 {
     public required string Number { get; init; }
     public required string Barcode { get; init; }
+    public required string DigitableLine { get; init; }
     public DateOnly DueDate { get; init; }
 }
 
